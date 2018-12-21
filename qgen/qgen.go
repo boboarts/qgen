@@ -127,9 +127,43 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, newHtml)
 }
 
+func coolHandler(w http.ResponseWriter, r *http.Request) {
+
+	tplHTMLData, err1 := ioutil.ReadFile("template.html")
+	var newHtml string = ""
+	if err1 == nil {
+		html := string(tplHTMLData)
+		// fmt.Println(html)
+
+		var problemsHTML, answersHTML string = "", ""
+		problems, answers, _ := genProblems(1, true, 3)
+		for index := 0; index < len(problems); index++ {
+			// fmt.Println(problems[index])
+			problemsHTML += fmt.Sprintf("$$%s$$\n", problems[index])
+			answersHTML += fmt.Sprintf("$$%s$$\n", answers[index])
+		}
+
+		// fmt.Println(problemsHTML)
+		// fmt.Println(answersHTML)
+		newHtml = strings.Replace(html, "#PROBLEMS#", problemsHTML, -1)
+		newHtml = strings.Replace(newHtml, "#ANSWERS#", answersHTML, -1)
+		// fmt.Println(newHtml)
+	}
+
+	// write to disk
+	// problemHtmlData := []byte(newHtml)
+	// err2 := ioutil.WriteFile("problems.html", problemHtmlData, 0644)
+	// if err2 == nil {
+	// 	fmt.Println("Done.")
+	// }
+
+	fmt.Fprintf(w, newHtml)
+}
+
 func main() {
 
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/cool", coolHandler)
 	http.ListenAndServe(":9923", nil)
 
 }
