@@ -1,2 +1,0 @@
-go build
-mv /home/gary/qgen/qgen/qgen /home/gary/qgen/bin/linux
