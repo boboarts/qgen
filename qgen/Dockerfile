@@ -6,6 +6,7 @@ RUN mkdir -p /etc/qgen
 WORKDIR /etc/qgen
 RUN curl -O https://raw.githubusercontent.com/boboarts/qgen/master/bin/centos/qgen
 RUN curl -O https://raw.githubusercontent.com/boboarts/qgen/master/bin/centos/template.html
+RUN chmod 755 qgen
 CMD ["/etc/qgen/qgen"]
 EXPOSE 9923
 # docker build -t "boboarts/qgen" .
@@ -14,6 +15,7 @@ EXPOSE 9923
 # docker run -it --name qgen boboarts/qgen /bin/bash
 # docker exec -it qgen /bin/bash
 # docker commit qgen boboarts/qgen
+# curl localhost:9923
 
 
 
