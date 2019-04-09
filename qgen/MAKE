@@ -1,4 +1,4 @@
 go build
 cp ./qgen ../bin/centos
 cp ./*.html ../bin/centos
-cd ../bin/centos
+cp ./Dockerfile ../bin/centos
