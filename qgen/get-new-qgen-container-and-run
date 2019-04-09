@@ -1,0 +1,4 @@
+docker stop qgen
+docker rm qgen
+docker rmi docker.io/boboarts/qgen:alpine
+docker run -d -p 9901:9923 --restart always --name qgen boboarts/qgen:alpine
