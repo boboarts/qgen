@@ -1,2 +1,4 @@
 go build
-mv ./qgen ../bin/centos
+cp ./qgen ../bin/centos
+cp ./*.html ../bin/centos
+cd ../bin/centos
