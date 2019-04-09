@@ -139,10 +139,19 @@ func genLe2uProblems(level int, sign bool, problemCount int) (problems []string,
 	length := len(possibleValues)
 	for i := 0; i < problemCount; i++ {
 
-		a := possibleValues[rand.Intn(length)]
-		b := possibleValues[rand.Intn(length)]
-		c := possibleValues[rand.Intn(length)]
-		d := possibleValues[rand.Intn(length)]
+		var a, b, c, d int
+
+		//Make sure that a!=c and b!=d
+		for {
+			a = possibleValues[rand.Intn(length)]
+			b = possibleValues[rand.Intn(length)]
+			c = possibleValues[rand.Intn(length)]
+			d = possibleValues[rand.Intn(length)]
+
+			if a != c && b != d {
+				break
+			}
+		}
 
 		x := possibleValues[rand.Intn(length)]
 		y := possibleValues[rand.Intn(length)]
