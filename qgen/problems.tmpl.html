@@ -6,16 +6,71 @@
   <title>PG</title>
   <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async>
-</script>
-<script>
-  function showAnswer()
+  </script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+  <script>
+
+    function showAnswer()
+    {
+      document.getElementById("answers").style="display:block"
+    }
+
+    function hideAnswer()
+    {
+      document.getElementById("answers").style="display:none"
+    }
+
+  function getNewUrl()
   {
-    document.getElementById("answers").style="display:block"
+    var len = window.location.href.length;
+    var url = window.location.href;
+    var newUrl = url.substr(0,len-3) + $("#level").val() + "/" + $("#sign").val()
+    return newUrl
   }
-  function hideAnswer()
+
+  function getHomeUrl()
   {
-    document.getElementById("answers").style="display:none"
+    var len = window.location.href.length;
+    var url = window.location.href;
+    var homeUrl = url.substr(0,len-window.location.pathname.length)
+    return homeUrl
   }
+
+  function parseUrl()
+  {
+    var len = window.location.href.length;
+    var url = window.location.href;
+    var pos = url.lastIndexOf("/", len-3)
+    var level = url.substr(pos+1,1)
+    var sign = url.substr(pos+3,1)
+    //var params = '{ "level": "2", "sign": "t"}'
+    var params = '{ "level": "' + level + '", "sign": "' + sign + '"}'
+    return params;
+  }
+
+  $(document).ready(function(){
+ 
+    $("#level").change(function(){
+      // alert($("#level").val());
+      window.location.assign(getNewUrl())
+    });
+
+    $("#sign").change(function(){
+      // alert($("#sign").val());
+      window.location.assign(getNewUrl())
+    });
+
+    $("#btnGoHome").click(function(){
+      // alert($("#sign").val());
+      window.location.assign(getHomeUrl())
+    });
+
+    var parmas = JSON.parse(parseUrl())
+    $("#sign").val(parmas.sign)
+    $("#level").val(parmas.level)
+    // alert (parmas.level)
+    // alert (parmas.sign)
+  });
 </script>
 </head>
 <body>
@@ -39,7 +94,19 @@
 <div style="text-align:center">
   <button id="btnShowAnswer" onclick="showAnswer()" >看答案</button>
   <button id="btnHideAnswer" onclick="hideAnswer()" >关答案</button>
-  <button id="btnHideAnswer" onclick="history.go(-1)" >返回</button>
+  <select name="level" id="level">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <select name="sign" id="sign">
+    <option value="t">混合模式</option>
+    <option value="f">只有正数</option>
+  </select>
+  <!-- <button id="btnGoBack" onclick="history.go(-1)" >返回</button> -->
+  <button id="btnGoHome">返回首页</button>
 </div>
 <p id="answers" style="display:none">
 #ANSWERS#
